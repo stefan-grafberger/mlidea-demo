@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 600px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "0: (0) patients.csv", "label": "0: (0) patients.csv", "operator_name": "(0) patients.csv", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "2: \u22c8", "label": "2: \u22c8", "operator_name": "\u22c8", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "1: (1) histories.csv", "label": "1: (1) histories.csv", "operator_name": "(1) histories.csv", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "3: GROUP_BY_AGG", "label": "3: GROUP_BY_AGG", "operator_name": "GROUP_BY_AGG", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "4: \u22c8", "label": "4: \u22c8", "operator_name": "\u22c8", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "5: \u03c0", "label": "5: \u03c0", "operator_name": "\u03c0", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "6: \u03c0", "label": "6: \u03c0", "operator_name": "\u03c0", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "9: \u03c0", "label": "9: \u03c0", "operator_name": "\u03c0", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "8: \u03c0", "label": "8: \u03c0", "operator_name": "\u03c0", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "7: \u03c0", "label": "7: \u03c0", "operator_name": "\u03c0", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "10: \u03c0", "label": "10: \u03c0", "operator_name": "\u03c0", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "11: \u03c0", "label": "11: \u03c0", "operator_name": "\u03c0", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "13: \u03c3", "label": "13: \u03c3", "operator_name": "\u03c3", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "12: \u03c0", "label": "12: \u03c0", "operator_name": "\u03c0", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "14: TRAIN_TEST_SPLIT", "label": "14: TRAIN_TEST_SPLIT", "operator_name": "TRAIN_TEST_SPLIT", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "15: TRAIN_TEST_SPLIT", "label": "15: TRAIN_TEST_SPLIT", "operator_name": "TRAIN_TEST_SPLIT", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "16: TRAIN_TEST_SPLIT", "label": "16: TRAIN_TEST_SPLIT", "operator_name": "TRAIN_TEST_SPLIT", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "17: \u03c0", "label": "17: \u03c0", "operator_name": "\u03c0", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "18: \u03c0", "label": "18: \u03c0", "operator_name": "\u03c0", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "21: \u03c0", "label": "21: \u03c0", "operator_name": "\u03c0", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "23: \u03c0", "label": "23: \u03c0", "operator_name": "\u03c0", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "29: \u03c0", "label": "29: \u03c0", "operator_name": "\u03c0", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "32: \u03c0", "label": "32: \u03c0", "operator_name": "\u03c0", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "34: \u03c0", "label": "34: \u03c0", "operator_name": "\u03c0", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "39: \u03c0", "label": "39: \u03c0", "operator_name": "\u03c0", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "42: \u03c0", "label": "42: \u03c0", "operator_name": "\u03c0", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "46: \u03c0", "label": "46: \u03c0", "operator_name": "\u03c0", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "49: \u03c0", "label": "49: \u03c0", "operator_name": "\u03c0", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "27: y_train", "label": "27: y_train", "operator_name": "y_train", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "19: \u03c0", "label": "19: \u03c0", "operator_name": "\u03c0", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "20: \u03c0", "label": "20: \u03c0", "operator_name": "\u03c0", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "30: \u03c0", "label": "30: \u03c0", "operator_name": "\u03c0", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "25: +", "label": "25: +", "operator_name": "+", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "31: \u03c0", "label": "31: \u03c0", "operator_name": "\u03c0", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "22: \u03c0", "label": "22: \u03c0", "operator_name": "\u03c0", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "33: \u03c0", "label": "33: \u03c0", "operator_name": "\u03c0", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "24: \u03c0", "label": "24: \u03c0", "operator_name": "\u03c0", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "35: \u03c0", "label": "35: \u03c0", "operator_name": "\u03c0", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "26: X_train", "label": "26: X_train", "operator_name": "X_train", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "28: Model Training", "label": "28: Model Training", "operator_name": "Model Training", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "38: Model Predictions", "label": "38: Model Predictions", "operator_name": "Model Predictions", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "36: +", "label": "36: +", "operator_name": "+", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "37: X_test", "label": "37: X_test", "operator_name": "X_test", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "41: Model Evaluation", "label": "41: Model Evaluation", "operator_name": "Model Evaluation", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "48: Model Evaluation", "label": "48: Model Evaluation", "operator_name": "Model Evaluation", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "51: Model Evaluation", "label": "51: Model Evaluation", "operator_name": "Model Evaluation", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "40: y_test", "label": "40: y_test", "operator_name": "y_test", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "43: \u03c0", "label": "43: \u03c0", "operator_name": "\u03c0", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "45: \u03c0", "label": "45: \u03c0", "operator_name": "\u03c0", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "44: \u03c0", "label": "44: \u03c0", "operator_name": "\u03c0", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "47: y_test", "label": "47: y_test", "operator_name": "y_test", "shape": "dot", "size": 10, "style": "filled"}, {"color": "#97c2fc", "fillcolor": "#FFFFFF", "fontcolor": "#000000", "id": "50: y_test", "label": "50: y_test", "operator_name": "y_test", "shape": "dot", "size": 10, "style": "filled"}]);
+                  edges = new vis.DataSet([{"from": "0: (0) patients.csv", "to": "2: \u22c8", "width": 1}, {"from": "1: (1) histories.csv", "to": "2: \u22c8", "width": 1}, {"from": "2: \u22c8", "to": "3: GROUP_BY_AGG", "width": 1}, {"from": "2: \u22c8", "to": "4: \u22c8", "width": 1}, {"from": "3: GROUP_BY_AGG", "to": "4: \u22c8", "width": 1}, {"from": "4: \u22c8", "to": "5: \u03c0", "width": 1}, {"from": "4: \u22c8", "to": "6: \u03c0", "width": 1}, {"from": "4: \u22c8", "to": "9: \u03c0", "width": 1}, {"from": "5: \u03c0", "to": "8: \u03c0", "width": 1}, {"from": "6: \u03c0", "to": "7: \u03c0", "width": 1}, {"from": "7: \u03c0", "to": "8: \u03c0", "width": 1}, {"from": "8: \u03c0", "to": "9: \u03c0", "width": 1}, {"from": "9: \u03c0", "to": "10: \u03c0", "width": 1}, {"from": "10: \u03c0", "to": "11: \u03c0", "width": 1}, {"from": "10: \u03c0", "to": "13: \u03c3", "width": 1}, {"from": "11: \u03c0", "to": "12: \u03c0", "width": 1}, {"from": "12: \u03c0", "to": "13: \u03c3", "width": 1}, {"from": "13: \u03c3", "to": "14: TRAIN_TEST_SPLIT", "width": 1}, {"from": "14: TRAIN_TEST_SPLIT", "to": "15: TRAIN_TEST_SPLIT", "width": 1}, {"from": "14: TRAIN_TEST_SPLIT", "to": "16: TRAIN_TEST_SPLIT", "width": 1}, {"from": "15: TRAIN_TEST_SPLIT", "to": "17: \u03c0", "width": 1}, {"from": "15: TRAIN_TEST_SPLIT", "to": "18: \u03c0", "width": 1}, {"from": "15: TRAIN_TEST_SPLIT", "to": "21: \u03c0", "width": 1}, {"from": "15: TRAIN_TEST_SPLIT", "to": "23: \u03c0", "width": 1}, {"from": "16: TRAIN_TEST_SPLIT", "to": "29: \u03c0", "width": 1}, {"from": "16: TRAIN_TEST_SPLIT", "to": "32: \u03c0", "width": 1}, {"from": "16: TRAIN_TEST_SPLIT", "to": "34: \u03c0", "width": 1}, {"from": "16: TRAIN_TEST_SPLIT", "to": "39: \u03c0", "width": 1}, {"from": "16: TRAIN_TEST_SPLIT", "to": "42: \u03c0", "width": 1}, {"from": "16: TRAIN_TEST_SPLIT", "to": "46: \u03c0", "width": 1}, {"from": "16: TRAIN_TEST_SPLIT", "to": "49: \u03c0", "width": 1}, {"from": "17: \u03c0", "to": "27: y_train", "width": 1}, {"from": "18: \u03c0", "to": "19: \u03c0", "width": 1}, {"from": "19: \u03c0", "to": "20: \u03c0", "width": 1}, {"from": "19: \u03c0", "to": "30: \u03c0", "width": 1}, {"from": "20: \u03c0", "to": "25: +", "width": 1}, {"from": "20: \u03c0", "to": "31: \u03c0", "width": 1}, {"from": "21: \u03c0", "to": "22: \u03c0", "width": 1}, {"from": "22: \u03c0", "to": "25: +", "width": 1}, {"from": "22: \u03c0", "to": "33: \u03c0", "width": 1}, {"from": "23: \u03c0", "to": "24: \u03c0", "width": 1}, {"from": "24: \u03c0", "to": "25: +", "width": 1}, {"from": "24: \u03c0", "to": "35: \u03c0", "width": 1}, {"from": "25: +", "to": "26: X_train", "width": 1}, {"from": "26: X_train", "to": "28: Model Training", "width": 1}, {"from": "27: y_train", "to": "28: Model Training", "width": 1}, {"from": "28: Model Training", "to": "38: Model Predictions", "width": 1}, {"from": "29: \u03c0", "to": "30: \u03c0", "width": 1}, {"from": "30: \u03c0", "to": "31: \u03c0", "width": 1}, {"from": "31: \u03c0", "to": "36: +", "width": 1}, {"from": "32: \u03c0", "to": "33: \u03c0", "width": 1}, {"from": "33: \u03c0", "to": "36: +", "width": 1}, {"from": "34: \u03c0", "to": "35: \u03c0", "width": 1}, {"from": "35: \u03c0", "to": "36: +", "width": 1}, {"from": "36: +", "to": "37: X_test", "width": 1}, {"from": "37: X_test", "to": "38: Model Predictions", "width": 1}, {"from": "38: Model Predictions", "to": "41: Model Evaluation", "width": 1}, {"from": "38: Model Predictions", "to": "48: Model Evaluation", "width": 1}, {"from": "38: Model Predictions", "to": "51: Model Evaluation", "width": 1}, {"from": "39: \u03c0", "to": "40: y_test", "width": 1}, {"from": "40: y_test", "to": "41: Model Evaluation", "width": 1}, {"from": "42: \u03c0", "to": "43: \u03c0", "width": 1}, {"from": "42: \u03c0", "to": "45: \u03c0", "width": 1}, {"from": "43: \u03c0", "to": "44: \u03c0", "width": 1}, {"from": "44: \u03c0", "to": "45: \u03c0", "width": 1}, {"from": "45: \u03c0", "to": "48: Model Evaluation", "width": 1}, {"from": "45: \u03c0", "to": "51: Model Evaluation", "width": 1}, {"from": "46: \u03c0", "to": "47: y_test", "width": 1}, {"from": "47: y_test", "to": "48: Model Evaluation", "width": 1}, {"from": "49: \u03c0", "to": "50: y_test", "width": 1}, {"from": "50: y_test", "to": "51: Model Evaluation", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

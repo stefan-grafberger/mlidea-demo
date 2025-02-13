@@ -1,0 +1,9 @@
+
+pyvis==0.3.1
+streamlit==1.42.0
+streamlit-ace==0.1.1
+mlidea @ git+https://github.com/stefan-grafberger/mlidea.git@290cfd164793f4b65b99998c9a352b99a3ece895
+st-cytoscape @ git+https://github.com/stefan-grafberger/st-cytoscape.git@e085d946d8560acba99277d10db230eade7e1099
+watchdog==6.0.0
+streamlit-extras==0.6.0
+streamlit-javascript==0.1.5

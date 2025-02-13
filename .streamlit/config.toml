@@ -1,0 +1,8 @@
+[theme]
+base="dark"
+# primaryColor = "#F39C12"  # Yellow/gold color for highlights
+backgroundColor = "#1d2329"   # Dark background
+# secondaryBackgroundColor = "#444444"  # Slightly lighter dark background
+#textColor = "#FFFFFF"  # White text for good contrast
+#font = "sans serif"  # Clean sans-serif font for readability
+
